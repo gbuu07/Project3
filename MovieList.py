@@ -1,12 +1,16 @@
 # Gia Buu Luong
-# ECE 241 - Project 3: App1
+# ECE 241 - Project 3: App1 and App4
 
 from Movie import Movie
 import random
 
 class MovieList:
-    def __init__(self, filename):
+    def __init__(self, filename=None):
         self.__movies = []
+
+        # No filename gives an empty list (used by MovieBST.extractListInOrder)
+        if filename is None:
+            return
 
         with open(filename, "r") as file:
             for line in file:
@@ -14,6 +18,9 @@ class MovieList:
                     movie_id, year, title = line.strip().split(";", 2)
                     movie = Movie(int(movie_id), int(year), title.strip())
                     self.__movies.append(movie)
+
+    def append(self, movie):
+        self.__movies.append(movie)
 
     def getSize(self):
         return len(self.__movies)
@@ -43,3 +50,7 @@ class MovieList:
         with open(filename, "w") as file:
             for movie in self.__movies:
                 file.write(str(movie) + "\n")
+
+    def display(self):
+        for movie in self.__movies:
+            print(movie)

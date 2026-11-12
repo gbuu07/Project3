@@ -1,7 +1,9 @@
 # Gia Buu Luong, Aymaan Mohammed
-# ECE 241 - Project 3: App2 and App3
+# ECE 241 - Project 3: App2, App3 and App4
 
 from Movie import Movie
+from MovieList import MovieList
+import random
 
 
 class Node:
@@ -82,3 +84,18 @@ class MovieBST:
             print("      " * level + str(node.movie.getID())
                   + "(" + str(node.index) + ")")
             self.__show(node.left, level + 1)
+
+    def extractListInOrder(self, word):
+        print("Begin sublist extraction for word:" + word
+              + " using in-order traversal")
+        userList = MovieList()
+        self.__extractListInOrder(self.__root, word.lower(), userList)
+        return userList
+
+    def __extractListInOrder(self, node, word, userList):
+        if node is not None:
+            self.__extractListInOrder(node.left, word, userList)
+            # Case-insensitive match on whole words of the title
+            if word in node.movie.getTitle().lower().split():
+                userList.append(node.movie)
+            self.__extractListInOrder(node.right, word, userList)
